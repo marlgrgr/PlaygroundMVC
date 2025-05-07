@@ -8,5 +8,7 @@ public interface MovieService {
 	void requestForloadMovies();
 
 	PagedResponse<MovieDTO> getMovieList(Integer page, Integer pageSize);
+	
+	MovieDTO getMovieById(Long movieId);
 
 }

@@ -16,4 +16,6 @@ public final class SharedConstants {
 	public static final String CLAIMS_USER_ID = "userId";
 
 	public static final String CLAIMS_USER_FULLNAME = "userFullname";
+	
+	public static final String CLAIMS_USER_ROLES = "userRoles";
 }

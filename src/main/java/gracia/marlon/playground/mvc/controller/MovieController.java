@@ -3,6 +3,7 @@ package gracia.marlon.playground.mvc.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,6 +51,18 @@ public class MovieController {
 			@RequestParam(required = false, defaultValue = "10") Integer pageSize) {
 		final PagedResponse<MovieDTO> pagedResponse = this.movieService.getMovieList(page, pageSize);
 		return pagedResponse;
+	}
+
+	@GetMapping("/movie/{movieId}")
+	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Successfully retrieve movie"),
+			@ApiResponse(responseCode = "400", description = "validations are not met", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))),
+			@ApiResponse(responseCode = "401", description = "Unauthorized: authentication is required.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))),
+			@ApiResponse(responseCode = "403", description = "Access denied: you do not have the required permissions.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))),
+			@ApiResponse(responseCode = "404", description = "Movie not found.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))) })
+	public MovieDTO getMovieById(@PathVariable Long movieId) {
+		final MovieDTO movieDTO = this.movieService.getMovieById(movieId);
+		return movieDTO;
 	}
 
 }

@@ -1,6 +1,7 @@
 package gracia.marlon.playground.mvc.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -11,10 +12,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import gracia.marlon.playground.mvc.dtos.MovieDTO;
 import gracia.marlon.playground.mvc.dtos.PagedResponse;
+import gracia.marlon.playground.mvc.exception.RestException;
 import gracia.marlon.playground.mvc.mapper.MovieMapper;
 import gracia.marlon.playground.mvc.model.Movie;
 import gracia.marlon.playground.mvc.queue.QueuePublisherService;
@@ -107,6 +110,23 @@ public class MovieServiceImpl implements MovieService {
 		final PagedResponse<MovieDTO> pagedResponse = PageableUtil.getPagedResponse(moviePage, movieDTOList);
 
 		return pagedResponse;
+	}
+
+	@Override
+	@Cacheable(cacheNames = "MovieService_getMovieById", key = "#movieId", unless = "#result == null")
+	public MovieDTO getMovieById(Long movieId) {
+		if (movieId == null) {
+			throw new RestException("The movie doesn't exist", "MOVIE-0005", HttpStatus.NOT_FOUND);
+		}
+
+		final Optional<Movie> movieOpt = this.movieRepository.findById(movieId);
+
+		if (movieOpt.isEmpty()) {
+			throw new RestException("The movie doesn't exist", "MOVIE-0005", HttpStatus.NOT_FOUND);
+		}
+
+		final MovieDTO movieDTO = this.movieMapper.toDto(movieOpt.get());
+		return movieDTO;
 	}
 
 }

@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 	public void createUser(UserWithPasswordDTO userDto) {
 		this.validateUser(userDto);
 		final Users user = new Users();
-		user.setUsername(userDto.getUsername());
+		user.setUsername(userDto.getUsername().trim().toLowerCase());
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		user.setFullname(userDto.getFullname());
 		user.setPasswordChangeRequired(true);

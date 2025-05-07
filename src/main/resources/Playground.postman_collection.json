@@ -25,7 +25,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{HOST}}/api/v1/users",
+							"raw": "{{HOST}}/api/v1/users?page=1&pageSize=10",
 							"host": [
 								"{{HOST}}"
 							],
@@ -33,6 +33,16 @@
 								"api",
 								"v1",
 								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -210,7 +220,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{HOST}}/api/v1/userRoles",
+							"raw": "{{HOST}}/api/v1/userRoles?page=1&pageSize=10",
 							"host": [
 								"{{HOST}}"
 							],
@@ -218,6 +228,16 @@
 								"api",
 								"v1",
 								"userRoles"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -235,7 +255,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{HOST}}/api/v1/userRoles/user/1",
+							"raw": "{{HOST}}/api/v1/userRoles/user/1?page=1&pageSize=10",
 							"host": [
 								"{{HOST}}"
 							],
@@ -245,6 +265,16 @@
 								"userRoles",
 								"user",
 								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -262,7 +292,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{HOST}}/api/v1/userRoles/role/1",
+							"raw": "{{HOST}}/api/v1/userRoles/role/1?page=1&pageSize=10",
 							"host": [
 								"{{HOST}}"
 							],
@@ -272,6 +302,44 @@
 								"userRoles",
 								"role",
 								"1"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all user-roles by userId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AUTH-HEADER}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/api/v1/userRoles/user/1/all",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"userRoles",
+								"user",
+								"1",
+								"all"
 							]
 						}
 					},
@@ -485,6 +553,32 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get movie by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AUTH-HEADER}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/api/v1/movie/986056",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"movie",
+								"986056"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -564,7 +658,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{HOST}}/api/v1/movieReview/movie/950387",
+							"raw": "{{HOST}}/api/v1/movieReview/movie/950387?page=1&pageSize=10",
 							"host": [
 								"{{HOST}}"
 							],
@@ -574,6 +668,16 @@
 								"movieReview",
 								"movie",
 								"950387"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
 							]
 						}
 					},

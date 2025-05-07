@@ -1,8 +1,10 @@
 package gracia.marlon.playground.mvc.services;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import gracia.marlon.playground.mvc.dtos.AuthRequestDTO;
 import gracia.marlon.playground.mvc.dtos.ChangePasswordDTO;
 import gracia.marlon.playground.mvc.dtos.UserDTO;
+import gracia.marlon.playground.mvc.dtos.UserRoleDTO;
 import gracia.marlon.playground.mvc.exception.RestException;
 import gracia.marlon.playground.mvc.util.SharedConstants;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	private final JWTService jwtService;
 
 	private final UserService userService;
+
+	private final UserRoleService userRoleService;
 
 	private final String PASSWORD_REGEX_VALIDATION = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[^A-Za-z\\d]).{8,}$";
 
@@ -36,11 +41,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		}
 
 		final UserDTO user = this.userService.getUserByUsername(request.getUsername());
+		final List<UserRoleDTO> userRoles = userRoleService.getAllUserRolesByUser(user.getId());
+		List<String> roleList = userRoles.stream().filter(x -> x.getRole() != null).map(x -> x.getRole().getRole())
+				.collect(Collectors.toList());
 
 		final Map<String, Object> claims = new HashMap<String, Object>();
 		claims.put(SharedConstants.CLAIMS_PASSWORD_CHANGE_REQUIRED, user.isPasswordChangeRequired());
 		claims.put(SharedConstants.CLAIMS_USER_ID, user.getId());
 		claims.put(SharedConstants.CLAIMS_USER_FULLNAME, user.getFullname());
+		claims.put(SharedConstants.CLAIMS_USER_ROLES, roleList);
 
 		final String token = this.jwtService.generateToken(claims, user);
 

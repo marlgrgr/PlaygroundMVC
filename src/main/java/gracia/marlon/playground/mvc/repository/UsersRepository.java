@@ -18,7 +18,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 	@Query("SELECT U FROM Users U WHERE U.id = ?1 AND U.isRetired = false")
 	Optional<Users> findById(Long id);
 
-	@Query("SELECT U FROM Users U WHERE U.username = ?1 AND U.isRetired = false")
+	@Query("SELECT U FROM Users U WHERE LOWER(U.username) = LOWER(?1) AND U.isRetired = false")
 	List<Users> findByUsername(String username);
 
 	@Query("SELECT U FROM Users U WHERE U.isRetired = false")

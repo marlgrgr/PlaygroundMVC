@@ -72,8 +72,17 @@ public class MovieControllerIT extends AbstractIntegrationBase {
 				new TypeReference<PagedResponse<MovieDTO>>() {
 				});
 
+		Long idFirstResult = pagedResponse.getResults().getFirst().getId();
+
 		assertEquals(1L, pagedResponse.getTotalResults());
 		assertEquals("tittle", pagedResponse.getResults().getFirst().getTitle());
+
+		response = mockMvc
+				.perform(get("/api/v1/movie/" + idFirstResult).header("Authorization", "Bearer " + this.getToken()))
+				.andExpect(status().isOk()).andReturn();
+
+		MovieDTO movieDTO = objectMapper.readValue(response.getResponse().getContentAsString(), MovieDTO.class);
+		assertEquals("tittle", movieDTO.getTitle());
 	}
 
 }

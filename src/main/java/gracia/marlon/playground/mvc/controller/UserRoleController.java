@@ -1,5 +1,7 @@
 package gracia.marlon.playground.mvc.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,6 +73,17 @@ public class UserRoleController {
 		final PagedResponse<UserRoleDTO> pagedResponse = this.userRoleService.getUserRolesByRole(roleId, page,
 				pageSize);
 		return pagedResponse;
+	}
+
+	@Secured({ "ROLE_ADMIN" })
+	@GetMapping("/userRoles/user/{userId}/all")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Successfully retrieve all user roles"),
+			@ApiResponse(responseCode = "400", description = "validations are not met", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))),
+			@ApiResponse(responseCode = "401", description = "Unauthorized: authentication is required.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))),
+			@ApiResponse(responseCode = "403", description = "Access denied: you do not have the required permissions.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))) })
+	public List<UserRoleDTO> getUserRoleListByUserId(@PathVariable Long userId) {
+		final List<UserRoleDTO> userRoleList = this.userRoleService.getAllUserRolesByUser(userId);
+		return userRoleList;
 	}
 
 	@Secured({ "ROLE_ADMIN" })

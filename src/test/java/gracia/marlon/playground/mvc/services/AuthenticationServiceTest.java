@@ -3,12 +3,16 @@ package gracia.marlon.playground.mvc.services;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import gracia.marlon.playground.mvc.dtos.AuthRequestDTO;
 import gracia.marlon.playground.mvc.dtos.ChangePasswordDTO;
 import gracia.marlon.playground.mvc.dtos.UserDTO;
+import gracia.marlon.playground.mvc.dtos.UserRoleDTO;
 import gracia.marlon.playground.mvc.exception.RestException;
 
 public class AuthenticationServiceTest {
@@ -17,12 +21,16 @@ public class AuthenticationServiceTest {
 
 	private final UserService userService;
 
+	private final UserRoleService userRoleService;
+
 	private final AuthenticationService authenticationService;
 
 	public AuthenticationServiceTest() {
 		this.jwtService = Mockito.mock(JWTService.class);
 		this.userService = Mockito.mock(UserService.class);
-		this.authenticationService = new AuthenticationServiceImpl(this.jwtService, this.userService);
+		this.userRoleService = Mockito.mock(UserRoleService.class);
+		this.authenticationService = new AuthenticationServiceImpl(this.jwtService, this.userService,
+				this.userRoleService);
 	}
 
 	@Test
@@ -35,8 +43,13 @@ public class AuthenticationServiceTest {
 		user.setId(1L);
 		user.setUsername("user");
 
+		UserRoleDTO userRoleDTO = new UserRoleDTO();
+		List<UserRoleDTO> userRoleList = new ArrayList<UserRoleDTO>();
+		userRoleList.add(userRoleDTO);
+
 		Mockito.when(this.userService.validUser(request)).thenReturn(true);
 		Mockito.when(this.userService.getUserByUsername("user")).thenReturn(user);
+		Mockito.when(this.userRoleService.getAllUserRolesByUser(Mockito.anyLong())).thenReturn(userRoleList);
 		Mockito.when(this.jwtService.generateToken(Mockito.anyMap(), Mockito.any())).thenReturn("token123");
 
 		assertEquals("token123", this.authenticationService.login(request));

@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -56,6 +58,16 @@ public class UserRoleControllerIT extends AbstractIntegrationBase {
 				});
 
 		assertEquals(2L, pagedResponse.getTotalResults());
+		
+		response = mockMvc.perform(
+				get("/api/v1/userRoles/user/" + userRoleUser + "/all").header("Authorization", "Bearer " + this.getToken()))
+				.andExpect(status().isOk()).andReturn();
+
+		List<UserRoleDTO> userRoleList = objectMapper.readValue(response.getResponse().getContentAsString(),
+				new TypeReference<List<UserRoleDTO>>() {
+				});
+
+		assertEquals(2L, userRoleList.size());
 
 		response = mockMvc
 				.perform(get("/api/v1/userRoles/role/" + roleUser).header("Authorization", "Bearer " + this.getToken()))
