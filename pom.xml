@@ -266,7 +266,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-               <argLine>${argLine} -Xshare:off -javaagent:${settings.localRepository}\net\bytebuddy\byte-buddy-agent\${byteBuddyVersion}\byte-buddy-agent-${byteBuddyVersion}.jar</argLine>
+               <argLine>${argLine} -Xshare:off -javaagent:${settings.localRepository}/net/bytebuddy/byte-buddy-agent/${byteBuddyVersion}/byte-buddy-agent-${byteBuddyVersion}.jar</argLine>
             </configuration>
             <executions>
                <execution>
@@ -286,7 +286,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
             <configuration>
-               <argLine>${argLine} -Xshare:off -javaagent:${settings.localRepository}\net\bytebuddy\byte-buddy-agent\${byteBuddyVersion}\byte-buddy-agent-${byteBuddyVersion}.jar</argLine>
+               <argLine>${argLine} -Xshare:off -javaagent:${settings.localRepository}/net/bytebuddy/byte-buddy-agent/${byteBuddyVersion}/byte-buddy-agent-${byteBuddyVersion}.jar</argLine>
             </configuration>
             <executions>
                <execution>
