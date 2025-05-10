@@ -71,6 +71,17 @@ Ensure the following tools/services are available:
 > spring.cloud.aws.sqs.enabled=false
 > ```
 
+To retrieve movies with their poster, title, overview, and more, please create a token at:
+
+> [https://developer.themoviedb.org/reference/intro/getting-started](https://developer.themoviedb.org/reference/intro/getting-started)
+
+
+Then configure your API key:
+
+> ```properties
+> api.movie.apiKey=your-api-key-here
+> ```
+
 ### 3. Run locally
 
 Ensure `application.properties` is properly configured, including Redisson settings. Then, run the project with:
