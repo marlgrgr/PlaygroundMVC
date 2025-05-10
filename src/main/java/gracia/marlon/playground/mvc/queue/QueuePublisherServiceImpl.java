@@ -1,12 +1,9 @@
 package gracia.marlon.playground.mvc.queue;
 
-import org.springframework.stereotype.Service;
-
 import io.awspring.cloud.sqs.operations.SqsTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Service
 @RequiredArgsConstructor
 @Slf4j
 public class QueuePublisherServiceImpl implements QueuePublisherService {

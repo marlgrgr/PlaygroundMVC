@@ -16,7 +16,7 @@ public class QueueConsumerIT extends AbstractIntegrationBase {
 	void sqsMessage() {
 
 		assertDoesNotThrow(() -> {
-			this.queuePublisherService.publish("mensaje", "test_queue");
+			this.queuePublisherService.publish("message", "test_queue");
 		});
 
 	}

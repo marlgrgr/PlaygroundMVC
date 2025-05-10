@@ -68,4 +68,16 @@ public class QueueConfig {
 	SqsTemplate sqsTemplate(SqsAsyncClient sqsAsyncClient) {
 		return SqsTemplate.builder().sqsAsyncClient(sqsAsyncClient).build();
 	}
+	
+	@Bean
+	@ConditionalOnProperty(prefix = "spring.cloud.aws.sqs", name = "enabled", havingValue = "true")
+	QueuePublisherService queuePublisherServiceSQS(SqsTemplate sqsTemplate) {
+		return new QueuePublisherServiceImpl(sqsTemplate);
+	}
+	
+	@Bean
+	@ConditionalOnProperty(prefix = "spring.cloud.aws.sqs", name = "enabled", havingValue = "false")
+	QueuePublisherService queuePublisherServiceNoSQS(AsyncConsumerService asyncConsumerService) {
+		return new QueuePublisherNoSQSServiceImpl(asyncConsumerService);
+	}
 }
