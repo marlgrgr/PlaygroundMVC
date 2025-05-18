@@ -43,6 +43,8 @@ public class MovieServiceImpl implements MovieService {
 	private final String LOAD_KEY = "LOAD_MOVIE_STATUS";
 
 	private final String STATUS_NOT_AVAILABLE = "NOT_AVAILABLE";
+	
+	private final String LOAD_MOVIE_LOCK = "load-movie-lock";
 
 	private final String loadMoviesQueueName;
 
@@ -72,7 +74,7 @@ public class MovieServiceImpl implements MovieService {
 			return;
 		}
 
-		final RLock lock = this.redissonClient.getLock("load-movie-lock");
+		final RLock lock = this.redissonClient.getLock(LOAD_MOVIE_LOCK);
 
 		try {
 			final boolean isLocked = lock.tryLock(MAX_WAIT_FOR_LOCK_TIME, MAX_TIME_WITH_LOCK, TimeUnit.SECONDS);

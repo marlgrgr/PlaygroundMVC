@@ -123,6 +123,9 @@ public class MovieReviewServiceImpl implements MovieReviewService {
 		this.cacheService.evictCache("MovieReviewService_getMovieReviews");
 		this.cacheService.evictCache("MovieReviewService_getMovieReviewsByMovie");
 		this.cacheService.evictCache("MovieReviewService_getMovieReviewByID");
+		this.cacheService.evictCache("Flux_MovieReviewService_getMovieReviews");
+		this.cacheService.evictCache("Flux_MovieReviewService_getMovieReviewsByMovie");
+		this.cacheService.evictCache("Flux_MovieReviewService_getMovieReviewByID");
 	}
 
 }

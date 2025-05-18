@@ -175,7 +175,7 @@ public class UserRoleServiceTest {
 
 		this.userRoleService.createUserRole(userRoleDTO);
 
-		Mockito.verify(this.cacheService, Mockito.times(4)).evictCache(Mockito.anyString());
+		Mockito.verify(this.cacheService, Mockito.times(8)).evictCache(Mockito.anyString());
 	}
 
 	@Test
@@ -278,6 +278,6 @@ public class UserRoleServiceTest {
 
 		this.userRoleService.deleteUserRole(1L);
 
-		Mockito.verify(this.cacheService, Mockito.times(4)).evictCache(Mockito.anyString());
+		Mockito.verify(this.cacheService, Mockito.times(8)).evictCache(Mockito.anyString());
 	}
 }

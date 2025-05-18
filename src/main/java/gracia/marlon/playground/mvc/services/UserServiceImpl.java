@@ -171,5 +171,9 @@ public class UserServiceImpl implements UserService {
 		this.cacheService.evictCache("UserService_getUsers");
 		this.cacheService.evictCache("UserService_getUserById");
 		this.cacheService.evictCache("UserService_getUserByUsername");
+		this.cacheService.evictCache("Flux_UserService_getUsers");
+		this.cacheService.evictCache("Flux_UserService_getUserById");
+		this.cacheService.evictCache("Flux_UserService_getUserByUsername");
+		this.cacheService.evictCache("Flux_UserService_findByUsername");
 	}
 }

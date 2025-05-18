@@ -149,7 +149,7 @@ public class UserServiceTest {
 
 		this.userService.createUser(userWithPasswordDTO);
 
-		Mockito.verify(this.cacheService, times(3)).evictCache(Mockito.anyString());
+		Mockito.verify(this.cacheService, times(7)).evictCache(Mockito.anyString());
 
 	}
 
@@ -200,7 +200,7 @@ public class UserServiceTest {
 
 		this.userService.deleteUser(1L);
 
-		Mockito.verify(this.cacheService, times(3)).evictCache(Mockito.anyString());
+		Mockito.verify(this.cacheService, times(7)).evictCache(Mockito.anyString());
 	}
 
 	@Test
@@ -219,7 +219,7 @@ public class UserServiceTest {
 
 		this.userService.changePassword(1L, changePasswordDTO);
 
-		Mockito.verify(this.cacheService, times(3)).evictCache(Mockito.anyString());
+		Mockito.verify(this.cacheService, times(7)).evictCache(Mockito.anyString());
 	}
 
 	@Test

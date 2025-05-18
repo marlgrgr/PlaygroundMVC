@@ -15,7 +15,7 @@ public class MessageListener {
 
 	private final WebsocketService websocketService;
 
-	@JmsListener(destination = SharedConstants.TOPIC_NOTIFICATION_NAME)
+	@JmsListener(destination = SharedConstants.TOPIC_NOTIFICATION_NAME, containerFactory = "topicListenerFactory", subscription = "mvc-subscription")
 	public void receiveMessage(String message) {
 		try {
 			log.info("A request for broadcast notification to the user websocket was receive from the topic.");

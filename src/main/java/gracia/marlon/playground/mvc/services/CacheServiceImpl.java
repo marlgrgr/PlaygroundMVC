@@ -13,10 +13,12 @@ public class CacheServiceImpl implements CacheService {
 	private final CacheManager cacheManager;
 	
 	private final RMapCache<String, String> cache;
+	
+	private final String SPECIAL_CACHE_NAME = "specialCache";
 
 	public CacheServiceImpl(CacheManager cacheManager, RedissonClient redissonClient) {
 		this.cacheManager = cacheManager;
-		this.cache = redissonClient.getMapCache("specialCache");
+		this.cache = redissonClient.getMapCache(this.SPECIAL_CACHE_NAME);
 	}
 
 	@Override

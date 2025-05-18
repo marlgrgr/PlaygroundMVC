@@ -19,7 +19,7 @@ public class AsyncConsumerServiceImpl implements AsyncConsumerService{
 	@Async
 	public void callAsync(String message) {
 		if (SharedConstants.LOAD_MESSAGE.equalsIgnoreCase(message)) {
-			log.info("A Load movies request message was receive asynchronously");
+			log.info("A Load movies request message was recieve asynchronously");
 			
 			loadMoviesService.loadMovies();
 		}

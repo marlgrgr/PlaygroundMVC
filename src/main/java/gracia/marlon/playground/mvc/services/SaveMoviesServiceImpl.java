@@ -45,7 +45,7 @@ public class SaveMoviesServiceImpl implements SaveMoviesService {
 
 			this.messageProducerService.publishMessage(SharedConstants.TOPIC_NOTIFICATION_NAME,
 					SharedConstants.TOPIC_NOTIFICATION_NEW_MOVIE);
-			
+
 			log.info("The movie list was succesfully persisted on the DB");
 
 		} catch (Exception e) {
@@ -67,6 +67,9 @@ public class SaveMoviesServiceImpl implements SaveMoviesService {
 
 	private void evictMovieCaches() {
 		this.cacheService.evictCache("MovieService_getMovieList");
+		this.cacheService.evictCache("MovieService_getMovieById");
+		this.cacheService.evictCache("Flux_MovieService_getMovieList");
+		this.cacheService.evictCache("Flux_MovieService_getMovieById");
 	}
 
 }

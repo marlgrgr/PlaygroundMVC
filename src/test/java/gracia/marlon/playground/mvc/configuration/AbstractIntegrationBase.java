@@ -116,7 +116,6 @@ public abstract class AbstractIntegrationBase {
 	@DynamicPropertySource
 	static void registerProperties(DynamicPropertyRegistry registry) {
 		if (!propertiesRegistered) {
-			// Make sure containers are started
 			startContainers();
 
 			// redis
@@ -158,7 +157,6 @@ public abstract class AbstractIntegrationBase {
 
 	@BeforeAll
     synchronized void setupTokenIfNeeded() throws Exception {
-        // Only generate token if it hasn't been generated already by any test class
         if (!tokenGenerated) {
             generateToken();
             tokenGenerated = true;

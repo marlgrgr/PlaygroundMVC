@@ -151,6 +151,10 @@ public class UserRoleServiceImpl implements UserRoleService {
 		this.cacheService.evictCache("UserRoleService_getUserRolesByUser");
 		this.cacheService.evictCache("UserRoleService_getUserRolesByRole");
 		this.cacheService.evictCache("UserRoleService_getAllUserRolesByUser");
+		this.cacheService.evictCache("Flux_UserRoleService_getUserRoles");
+		this.cacheService.evictCache("Flux_UserRoleService_getUserRolesByUser");
+		this.cacheService.evictCache("Flux_UserRoleService_getUserRolesByRole");
+		this.cacheService.evictCache("Flux_UserRoleService_getAllUserRolesByUser");
 	}
 
 }

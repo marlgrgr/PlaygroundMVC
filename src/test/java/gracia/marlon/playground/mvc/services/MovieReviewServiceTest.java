@@ -142,7 +142,7 @@ public class MovieReviewServiceTest {
 
 		this.movieReviewService.saveReview(movieReviewDTO);
 
-		Mockito.verify(this.cacheService, times(3)).evictCache(Mockito.anyString());
+		Mockito.verify(this.cacheService, times(6)).evictCache(Mockito.anyString());
 
 	}
 

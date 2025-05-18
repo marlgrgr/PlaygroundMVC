@@ -59,7 +59,7 @@ public class QueueConfig {
 
 	@Bean
 	@ConditionalOnProperty(prefix = "spring.cloud.aws.sqs", name = "enabled", havingValue = "true")
-	QueueConsumer rfaQueueConsumer(LoadMoviesService loadMoviesService) {
+	QueueConsumer queueConsumer(LoadMoviesService loadMoviesService) {
 		return new QueueConsumer(loadMoviesService);
 	}
 
