@@ -33,7 +33,7 @@ public class GraphQLConfigTest {
 
 		String result = (String) graphQLScalarType.getCoercing().serialize(testDate, graphQLContext, locale);
 
-		assertEquals("2025-05-25T14:54:01.000-05:00", result);
+		assertEquals("2025-05-25T19:54:01.000Z", result);
 
 		assertThrows(CoercingSerializeException.class,
 				() -> graphQLScalarType.getCoercing().serialize(new Object(), graphQLContext, locale));

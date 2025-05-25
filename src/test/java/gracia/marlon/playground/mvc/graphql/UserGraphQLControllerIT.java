@@ -104,9 +104,6 @@ public class UserGraphQLControllerIT extends AbstractIntegrationBase {
 		response = mockMvc.perform(post("/graphql").header("Authorization", "Bearer " + this.getToken())
 				.contentType(MediaType.APPLICATION_JSON).content(query)).andExpect(status().isOk()).andReturn();
 
-		response = mockMvc.perform(post("/graphql").header("Authorization", "Bearer " + this.getToken())
-				.contentType(MediaType.APPLICATION_JSON).content(query)).andExpect(status().isOk()).andReturn();
-
 		responseMap = objectMapper.readValue(response.getResponse().getContentAsString(),
 				new TypeReference<Map<String, Object>>() {
 				});
