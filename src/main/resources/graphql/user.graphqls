@@ -1,0 +1,30 @@
+type UserDTO {
+    id: ID!
+    username: String!
+    fullname: String!
+    passwordChangeRequired: Boolean!
+}
+
+type PagedUserResponseUserDTO {
+    page: Int!
+    totalPages: Int!
+    totalResults: Int!
+    results: [UserDTO!]!
+}
+
+input UserWithPasswordDTO {
+  	username: String!
+  	password: String!
+  	fullname: String!
+}
+
+type Query {
+    getUsers(page: Int = 1, pageSize: Int = 10): PagedUserResponseUserDTO!
+    getUserById(userId: ID!): UserDTO!
+    getUserByUsername(username: String!): UserDTO!
+}
+
+type Mutation {
+    createUser(user: UserWithPasswordDTO!): Boolean
+    deleteUser(userId: ID!): Boolean
+}

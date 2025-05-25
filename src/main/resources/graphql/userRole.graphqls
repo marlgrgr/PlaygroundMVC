@@ -1,0 +1,37 @@
+type UserRoleDTO {
+    id: ID!
+    user: UserDTO!
+    role: RoleDTO
+}
+
+type PagedUserResponseUserRoleDTO {
+    page: Int!
+    totalPages: Int!
+    totalResults: Int!
+    results: [UserRoleDTO!]!
+}
+
+input UserInput {
+	id: ID!
+}
+
+input RoleInput {
+	id: ID!
+}
+
+input InputUserRoleDTO{
+	user: UserInput!
+	role: RoleInput!
+}
+
+extend type Query {
+   	getUserRoleList(page: Int = 1, pageSize: Int = 10): PagedUserResponseUserRoleDTO!
+   	getUserRoleListByUserId(userId: ID!, page: Int = 1, pageSize: Int = 10): PagedUserResponseUserRoleDTO!
+   	getUserRoleListByRoleId(roleId: ID!, page: Int = 1, pageSize: Int = 10): PagedUserResponseUserRoleDTO!
+    getAllUserRoleListByUserId(userId: ID!): [UserRoleDTO!]!
+}
+
+extend type Mutation {
+    createUserRole(userRole: InputUserRoleDTO!): Boolean
+    deleteUserRole(userRoleId: ID!): Boolean
+}

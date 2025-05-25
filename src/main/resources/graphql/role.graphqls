@@ -1,0 +1,8 @@
+type RoleDTO {
+	id: ID!
+	role: String!
+}
+
+extend type Query {
+    getRoleList: [RoleDTO!]!
+}

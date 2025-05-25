@@ -1,0 +1,31 @@
+type MovieReviewDTO {
+    id: ID!
+    review: String!
+    score: Float!
+    movieId: Int!
+    createOn: Date!
+}
+
+type PagedUserResponseMovieReviewDTO {
+    page: Int!
+    totalPages: Int!
+    totalResults: Int!
+    results: [MovieReviewDTO!]!
+}
+
+input InputMovieReviewDTO{
+	id: String
+    review: String!
+    score: Float!
+    movieId: Int
+}
+
+extend type Query {
+   	getMovieReviewResponseDTO(page: Int = 1, pageSize: Int = 10): PagedUserResponseMovieReviewDTO!
+   	getMovieReviewResponseDTOByID(movieReviewId: ID!): MovieReviewDTO!
+   	getMovieReviewResponseDTOByMovieID(movieId: ID!, page: Int = 1, pageSize: Int = 10): PagedUserResponseMovieReviewDTO!
+}
+
+extend type Mutation {
+    createMovieReview(movieReviewDTO: InputMovieReviewDTO!): Boolean
+}

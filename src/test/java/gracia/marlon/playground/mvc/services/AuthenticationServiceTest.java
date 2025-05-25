@@ -117,6 +117,7 @@ public class AuthenticationServiceTest {
 
 		Mockito.when(this.jwtService.extractUsername(token)).thenReturn("user");
 		Mockito.when(this.jwtService.extractUserId(token)).thenReturn(1L);
+		Mockito.when(this.jwtService.isTokenValid(Mockito.anyString(), Mockito.any())).thenReturn(true);
 		Mockito.when(this.userService.validUser(Mockito.any())).thenReturn(true);
 		Mockito.doNothing().when(this.userService).changePassword(Mockito.anyLong(), Mockito.any());
 
@@ -155,6 +156,7 @@ public class AuthenticationServiceTest {
 
 		Mockito.when(this.jwtService.extractUsername(token)).thenReturn("user");
 		Mockito.when(this.jwtService.extractUserId(token)).thenReturn(1L);
+		Mockito.when(this.jwtService.isTokenValid(Mockito.anyString(), Mockito.any())).thenReturn(true);
 
 		final ChangePasswordDTO changePasswordDTONull = null;
 
@@ -207,6 +209,7 @@ public class AuthenticationServiceTest {
 		Mockito.when(this.jwtService.extractUsername(token)).thenReturn("user");
 		Mockito.when(this.jwtService.extractUserId(token)).thenReturn(1L);
 		Mockito.when(this.userService.validUser(Mockito.any())).thenReturn(false);
+		Mockito.when(this.jwtService.isTokenValid(Mockito.anyString(), Mockito.any())).thenReturn(true);
 
 		ChangePasswordDTO changePasswordDTO = new ChangePasswordDTO();
 		changePasswordDTO.setConfirmNewPassword("newPass*123");
@@ -216,5 +219,23 @@ public class AuthenticationServiceTest {
 		RestException restException = assertThrows(RestException.class,
 				() -> this.authenticationService.changePassword(token, changePasswordDTO));
 		assertEquals("AUTH-0014", restException.getError().getCode());
+	}
+	
+	@Test
+	public void changePasswordNotValidJWT() {
+		String token = "token123";
+
+		Mockito.when(this.jwtService.extractUsername(token)).thenReturn("user");
+		Mockito.when(this.jwtService.extractUserId(token)).thenReturn(1L);
+		Mockito.when(this.jwtService.isTokenValid(Mockito.anyString(), Mockito.any())).thenReturn(false);
+
+		ChangePasswordDTO changePasswordDTO = new ChangePasswordDTO();
+		changePasswordDTO.setConfirmNewPassword("newPass*123");
+		changePasswordDTO.setNewPassword("newPass*123");
+		changePasswordDTO.setOldPassword("oldPass");
+
+		RestException restException = assertThrows(RestException.class,
+				() -> this.authenticationService.changePassword(token, changePasswordDTO));
+		assertEquals("AUTH-0016", restException.getError().getCode());
 	}
 }

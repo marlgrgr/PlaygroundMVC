@@ -1,5 +1,6 @@
 package gracia.marlon.playground.mvc.filter;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -8,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -61,6 +63,7 @@ public class JWTAuthenticationFilterIT extends AbstractIntegrationBase {
 				.andExpect(status().isUnauthorized());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	void JWTChangePasswordRequired() throws Exception {
 
@@ -86,6 +89,41 @@ public class JWTAuthenticationFilterIT extends AbstractIntegrationBase {
 
 		mockMvc.perform(get("/api/v1/users").header("Authorization", "Bearer " + token))
 				.andExpect(status().isForbidden());
+
+		String queryStr = """
+				query GetUsers {
+				    getUsers {
+				        page
+				        totalPages
+				        totalResults
+				        results {
+				            id
+				            passwordChangeRequired
+				            fullname
+				            username
+				        }
+				    }
+				}
+				""";
+
+		String query = "{\"query\": \"" + queryStr.replace("\"", "\\\"").replace("\t", " ").replace("\n", "") + "\"}";
+
+		response = mockMvc
+				.perform(post("/graphql").contentType(MediaType.APPLICATION_JSON)
+						.header("Authorization", "Bearer " + token).content(query))
+				.andExpect(status().isOk()).andReturn();
+
+		Map<String, Object> responseMap = objectMapper.readValue(response.getResponse().getContentAsString(),
+				new TypeReference<Map<String, Object>>() {
+				});
+
+		List<Map<String, Object>> errorList = objectMapper.convertValue(responseMap.get("errors"),
+				new TypeReference<List<Map<String, Object>>>() {
+				});
+
+		Map<String, Object> extensionsMap = (Map<String, Object>) errorList.getFirst().get("extensions");
+
+		assertEquals("403", extensionsMap.get("httpCode").toString());
 
 		response = mockMvc.perform(get("/api/v1/users").header("Authorization", "Bearer " + this.getToken()))
 				.andExpect(status().isOk()).andReturn();

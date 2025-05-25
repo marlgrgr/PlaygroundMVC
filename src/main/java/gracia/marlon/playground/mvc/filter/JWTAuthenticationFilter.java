@@ -1,7 +1,12 @@
 package gracia.marlon.playground.mvc.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.springframework.graphql.execution.ErrorType;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,8 +16,12 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import gracia.marlon.playground.mvc.dtos.UserDTO;
 import gracia.marlon.playground.mvc.services.JWTService;
+import graphql.GraphQLError;
+import graphql.GraphqlErrorBuilder;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,11 +64,34 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 					final boolean passwordChangeRequired = jwtService.extractPasswordChangeRequired(token);
 
 					if (passwordChangeRequired && !request.getRequestURI().contains(this.PATH_TO_CHANGE_PASSWORD)) {
-						response.setStatus(HttpStatus.FORBIDDEN.value());
-						response.setContentType("application/json");
-						response.getWriter().write(
-								"{\"message\":\"You must change your password before using any other endpoint\",\"code\":\"AUTH-0017\",\"httpCode\":403}");
-						return;
+						if (request.getRequestURI().contains("/graphql")) {
+							Map<String, Object> extensions = new HashMap<>();
+							extensions.put("message", "You must change your password before using any other endpoint");
+							extensions.put("code", "AUTH-0017");
+							extensions.put("httpCode", 403);
+
+							ErrorType errorType = ErrorType.FORBIDDEN;
+
+							GraphQLError graphError = GraphqlErrorBuilder.newError()
+									.message("You must change your password before using any other endpoint")
+									.errorType(errorType).extensions(extensions).build();
+
+							Map<String, Object> errorGraphDetails = graphError.toSpecification();
+							Map<String, Object> responseMap = new HashMap<String, Object>();
+							List<Object> errorMap = new ArrayList<Object>();
+							errorMap.add(errorGraphDetails);
+							responseMap.put("errors", errorMap);
+							response.setStatus(HttpServletResponse.SC_OK);
+							final ObjectMapper mapper = new ObjectMapper();
+							response.getWriter().write(mapper.writeValueAsString(responseMap));
+							return;
+						} else {
+							response.setStatus(HttpStatus.FORBIDDEN.value());
+							response.setContentType("application/json");
+							response.getWriter().write(
+									"{\"message\":\"You must change your password before using any other endpoint\",\"code\":\"AUTH-0017\",\"httpCode\":403}");
+							return;
+						}
 					}
 
 					final UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

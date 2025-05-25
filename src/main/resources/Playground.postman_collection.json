@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "2162d57d-53a1-49ec-9513-dadc9c71369f",
+		"_postman_id": "48104cf1-edcd-4b7a-b7df-e4089adb680a",
 		"name": "Playground",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "3122091",
-		"_collection_link": "https://winter-spaceship-400533.postman.co/workspace/intrado~0fe44523-d91f-41ad-9d3e-1c2f31967933/collection/3122091-2162d57d-53a1-49ec-9513-dadc9c71369f?action=share&source=collection_link&creator=3122091"
+		"_collection_link": "https://winter-spaceship-400533.postman.co/workspace/intrado~0fe44523-d91f-41ad-9d3e-1c2f31967933/collection/3122091-48104cf1-edcd-4b7a-b7df-e4089adb680a?action=share&source=collection_link&creator=3122091"
 	},
 	"item": [
 		{
@@ -716,6 +716,627 @@
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Graphql",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Get users",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetUsers {\r\n    getUsers {\r\n        page\r\n        totalPages\r\n        totalResults\r\n        results {\r\n            id\r\n            username\r\n            fullname\r\n            passwordChangeRequired\r\n        }\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get user by id",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetUserById {\r\n    getUserById(userId: \"1\") {\r\n        id\r\n        username\r\n        fullname\r\n        passwordChangeRequired\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get user by username",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetUserByUsername {\r\n    getUserByUsername(username: \"admin\") {\r\n        id\r\n        username\r\n        fullname\r\n        passwordChangeRequired\r\n    }\r\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create user",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation CreateUser {\r\n    createUser(\r\n        user: { username: \"new_user\", password: \"pass\", fullname: \"New User\" }\r\n    )\r\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation DeleteUser {\r\n    deleteUser(userId: \"7\")\r\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Roles",
+					"item": [
+						{
+							"name": "Get Roles",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetRoleList {\r\n    getRoleList {\r\n        id\r\n        role\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User-Roles",
+					"item": [
+						{
+							"name": "Get user-roles",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetUserRoleList {\r\n    getUserRoleList {\r\n        page\r\n        totalPages\r\n        totalResults\r\n        results {\r\n            id\r\n            user {\r\n                id\r\n                username\r\n                fullname\r\n                passwordChangeRequired\r\n            }\r\n            role {\r\n                id\r\n                role\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get user-roles by user",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetUserRoleListByUserId {\r\n    getUserRoleListByUserId(userId: \"1\", page: 1, pageSize: 10) {\r\n        page\r\n        totalPages\r\n        totalResults\r\n        results {\r\n            id\r\n            user {\r\n                id\r\n                username\r\n                fullname\r\n                passwordChangeRequired\r\n            }\r\n            role {\r\n                id\r\n                role\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get user-roles by role",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetUserRoleListByRoleId {\r\n    getUserRoleListByRoleId(roleId: \"1\", page: 1, pageSize: 10) {\r\n        page\r\n        totalPages\r\n        totalResults\r\n        results {\r\n            id\r\n            user {\r\n                id\r\n                username\r\n                fullname\r\n                passwordChangeRequired\r\n            }\r\n            role {\r\n                id\r\n                role\r\n            }\r\n        }\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all user-roles by userId",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetAllUserRoleListByUserId {\r\n    getAllUserRoleListByUserId(userId: \"1\") {\r\n        id\r\n        user {\r\n            id\r\n            username\r\n            fullname\r\n            passwordChangeRequired\r\n        }\r\n        role {\r\n            id\r\n            role\r\n        }\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create user-role",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation CreateUserRole {\r\n    createUserRole(userRole: { user: { id: \"2\" }, role: { id: \"1\" } })\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user-role",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation DeleteUserRole {\r\n    deleteUserRole(userRoleId: \"10\")\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Movie",
+					"item": [
+						{
+							"name": "Load movies",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation LoadMovies {\r\n    loadMovies\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get movie list",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetMovieDetailsResponseDTO {\r\n    getMovieDetailsResponseDTO(page: 1, pageSize: 10) {\r\n        page\r\n        totalPages\r\n        totalResults\r\n        results {\r\n            id\r\n            genreIds\r\n            genres\r\n            originalLanguage\r\n            originalTitle\r\n            overview\r\n            popularity\r\n            posterPath\r\n            releaseDate\r\n            title\r\n            voteAverage\r\n            voteCount\r\n            createOn\r\n        }\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get movie by id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetMovieById {\r\n    getMovieById(movieId: \"950387\") {\r\n        id\r\n        genreIds\r\n        genres\r\n        originalLanguage\r\n        originalTitle\r\n        overview\r\n        popularity\r\n        posterPath\r\n        releaseDate\r\n        title\r\n        voteAverage\r\n        voteCount\r\n        createOn\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Movie Review",
+					"item": [
+						{
+							"name": "Get movie review list",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetMovieReviewResponseDTO {\r\n    getMovieReviewResponseDTO(page: 1, pageSize: 10) {\r\n        page\r\n        totalPages\r\n        totalResults\r\n        results {\r\n            id\r\n            review\r\n            score\r\n            movieId\r\n            createOn\r\n        }\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get movie review by id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetMovieReviewResponseDTOByID {\r\n    getMovieReviewResponseDTOByID(movieReviewId: \"683268763b107618a5716a32\") {\r\n        id\r\n        review\r\n        score\r\n        movieId\r\n        createOn\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get movie review by movie id",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query GetMovieReviewResponseDTOByMovieID {\r\n    getMovieReviewResponseDTOByMovieID(movieId: \"986056\", page: 1, pageSize: 10) {\r\n        page\r\n        totalPages\r\n        totalResults\r\n        results {\r\n            id\r\n            review\r\n            score\r\n            movieId\r\n            createOn\r\n        }\r\n    }\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create movie review",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AUTH-HEADER}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation CreateMovieReview {\r\n    createMovieReview(\r\n        movieReviewDTO: { review: \"I really like this movie\", score: 4.5, movieId: 986056 }\r\n    )\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}

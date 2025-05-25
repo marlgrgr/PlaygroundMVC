@@ -1,0 +1,33 @@
+scalar Date
+
+type MovieDTO {
+  id: ID!
+  genreIds: [Int]
+  genres: [String]
+  originalLanguage: String
+  originalTitle: String
+  overview: String
+  popularity: Float
+  posterPath: String
+  releaseDate: String
+  title: String
+  voteAverage: Float
+  voteCount: Float
+  createOn: Date
+}
+
+type PagedUserResponseMovieDTO {
+    page: Int!
+    totalPages: Int!
+    totalResults: Int!
+    results: [MovieDTO!]!
+}
+
+extend type Query {
+  getMovieDetailsResponseDTO(page: Int = 1, pageSize: Int = 10): PagedUserResponseMovieDTO!
+  getMovieById(movieId: ID!): MovieDTO!
+}
+
+extend type Mutation {
+  loadMovies: Boolean
+}

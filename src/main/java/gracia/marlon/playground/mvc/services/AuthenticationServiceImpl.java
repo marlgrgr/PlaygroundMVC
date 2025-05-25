@@ -66,6 +66,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		} catch (Exception e) {
 			throw new RestException("Token is not valid", "AUTH-0016", HttpStatus.BAD_REQUEST);
 		}
+		
+		UserDTO userDTO = new UserDTO();
+		userDTO.setUsername(username);
+		if(!this.jwtService.isTokenValid(token, userDTO)) {
+			throw new RestException("Token is not valid", "AUTH-0016", HttpStatus.BAD_REQUEST);
+		}
 
 		this.validatePasswordChange(username, changePasswordDTO);
 		this.userService.changePassword(userId, changePasswordDTO);
