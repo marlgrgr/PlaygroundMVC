@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playground-mvc
+  namespace: playground
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: playground
+      type: mvc
+  template:
+    metadata:
+      labels:
+        app: playground
+        type: mvc
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8081"
+    spec:
+      containers:
+        - name: playground-mvc
+          image: playground-mvc:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+          env:
+            - name: JAVA_OPTS
+              valueFrom:
+                secretKeyRef:
+                  name: ${SECRET_NAME}
+                  key: JAVA_OPTS
