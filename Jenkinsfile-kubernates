@@ -3,6 +3,7 @@ pipeline {
     
     parameters {
         choice(name: 'ENVIRONMENT', choices: ['local', 'production'], description: 'Select the deployment environment')
+		string(name: 'REPLICAS', defaultValue: '2', description: 'Number of replicas to deploy')
     }
     
     environment {
@@ -79,6 +80,7 @@ pipeline {
 					def secretName = "playground-mvc-${ENVIRONMENT}-secret"
 					withCredentials([string(credentialsId: "${CREDENTIALS_ID}", variable: 'JAVA_OPTS_SECRETS')]) {
 						sh """
+							kubectl get namespace playground || kubectl create namespace playground
 							kubectl delete secret ${secretName} -n playground || true
 							kubectl create secret generic ${secretName} \\
 								--from-literal=JAVA_OPTS="\${JAVA_OPTS_SECRETS}" \\
@@ -95,6 +97,7 @@ pipeline {
 					def secretName = "playground-mvc-${ENVIRONMENT}-secret"
 					sh """
 						export SECRET_NAME=${secretName}
+						export REPLICAS=${REPLICAS}
 						envsubst < k8s/deployment-playground-mvc.yaml > k8s/deployment.yaml
 						kubectl apply -f k8s/deployment.yaml
 						kubectl apply -f k8s/service-merged.yaml

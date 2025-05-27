@@ -4,7 +4,7 @@ metadata:
   name: playground-mvc
   namespace: playground
 spec:
-  replicas: 2
+  replicas: ${REPLICAS}
   selector:
     matchLabels:
       app: playground
